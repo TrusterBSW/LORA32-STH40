@@ -1,0 +1,186 @@
+[
+    {
+        "id": "4a4dc15a21e0e305",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "0f564717ede09336",
+        "type": "mqtt in",
+        "z": "4a4dc15a21e0e305",
+        "name": "",
+        "topic": "lora/Lora_GW/LORAtoMQTT/#",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "562ec1085cc9dbf1",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 80,
+        "wires": [
+            [
+                "4bd02d8f01c2f8e3"
+            ]
+        ]
+    },
+    {
+        "id": "381bef3ab3845a50",
+        "type": "influxdb out",
+        "z": "4a4dc15a21e0e305",
+        "influxdb": "bc4ab5cb2a050021",
+        "name": "Lora",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "",
+        "retentionPolicyV18Flux": "",
+        "org": "iot",
+        "bucket": "lora",
+        "x": 910,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "4bd02d8f01c2f8e3",
+        "type": "json",
+        "z": "4a4dc15a21e0e305",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 390,
+        "y": 80,
+        "wires": [
+            [
+                "5026ec07ae6a5388",
+                "eb5fab8d694f7e9d"
+            ]
+        ]
+    },
+    {
+        "id": "609e1a4b1b1c2df3",
+        "type": "change",
+        "z": "4a4dc15a21e0e305",
+        "name": "Set ID",
+        "rules": [
+            {
+                "t": "set",
+                "p": "measurement",
+                "pt": "msg",
+                "to": "payload.id",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 750,
+        "y": 80,
+        "wires": [
+            [
+                "381bef3ab3845a50"
+            ]
+        ]
+    },
+    {
+        "id": "5026ec07ae6a5388",
+        "type": "switch",
+        "z": "4a4dc15a21e0e305",
+        "name": "only if id is defined",
+        "property": "payload.id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nnull"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 570,
+        "y": 80,
+        "wires": [
+            [
+                "609e1a4b1b1c2df3",
+                "fafb6170c6c68fa1"
+            ]
+        ]
+    },
+    {
+        "id": "fafb6170c6c68fa1",
+        "type": "link out",
+        "z": "4a4dc15a21e0e305",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "7027476d8b6bbb73"
+        ],
+        "x": 706,
+        "y": 127,
+        "wires": []
+    },
+    {
+        "id": "eb5fab8d694f7e9d",
+        "type": "debug",
+        "z": "4a4dc15a21e0e305",
+        "name": "debug 11",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 551,
+        "y": 27,
+        "wires": []
+    },
+    {
+        "id": "879792f440ba277e",
+        "type": "debug",
+        "z": "4a4dc15a21e0e305",
+        "name": "debug 13",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1231,
+        "y": 327,
+        "wires": []
+    },
+    {
+        "id": "1fadacb5bb889737",
+        "type": "inject",
+        "z": "4a4dc15a21e0e305",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"id\":\"TEST\",\"temperature\":2.4,\"humidity\":60,\"battery\":14,\"rssi\":-30,\"snr\":15}",
+        "payloadType": "json",
+        "x": 201,
+        "y": 147,
+        "wires": [
+            [
+                "5026ec07ae6a5388"
+            ]
+        ]
+    }
+]
